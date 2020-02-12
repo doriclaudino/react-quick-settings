@@ -27,4 +27,14 @@ q = new QuickSettings(container)
 q.addSlider('how_many_cats',1,200,50,1,(x)=>console.log(x))
  .addSlider('how_many_dogs',1,400,50,1,(x)=>console.log(x))
  .addSlider('how_many_horses',1,600,50,1,(x)=>console.log(x))
+ 
+ 
+ //can check the remove method
+ q.remove(title_here)
+
+//can also add and remove item in chain-style
+q.addSlider('how_many_cats',1,200,50,1,(x)=>console.log(x))
+ .addSlider('how_many_dogs',1,400,50,1,(x)=>console.log(x))
+ .addSlider('how_many_horses',1,600,50,1,(x)=>console.log(x))
+ .remove('how_many_dogs')
 </pre>
