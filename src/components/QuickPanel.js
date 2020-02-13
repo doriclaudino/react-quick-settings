@@ -17,14 +17,14 @@ export class QuickSettingsPanel extends Component {
     }
   
     /** should we add an type? */
-    addSlider = ({title='slider01', options}) => {
+    addSlider = ({title='slider01', ...rest}) => {
       this.setState({
         controls: {
           ...this.state.controls,
           [title]: {
             inputType:  inputType.slider,
             title,
-            options
+            ...rest
           }
         }
       });
@@ -62,11 +62,11 @@ export class QuickSettingsPanel extends Component {
         <div>
           {Object.keys(this.state.controls).map((mappedKeyItem) => {
               let item = this.state.controls[mappedKeyItem]
-              const {title, options, inputType} = item              
+              const {title, inputType, ...rest} = item              
               let Component = this.getComponentForType(inputType)
               let key = this.generateNewKey(item)
               console.log(title)
-              return <Component key id={key} {...options}/>  
+              return <Component key={key} id={key} {...rest}/>  
           })
           }
         </div>
