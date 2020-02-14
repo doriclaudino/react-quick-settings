@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server --open --mode development",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "fix": "npx standard --fix"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

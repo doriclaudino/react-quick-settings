@@ -1,25 +1,25 @@
-import { Slider as _SliderComponent } from '@material-ui/core';
-import React, { Component } from "react";
+import { Slider as _SliderComponent } from '@material-ui/core'
+import React, { Component } from 'react'
 import * as reactColorPicker from 'react-color'
 
 var inputType = {
   slider: 'slider',
-  colorPicker: 'colorPicker',
-};
+  colorPicker: 'colorPicker'
+}
 
 /**
  * Main class
  */
 export class QuickSettingsPanel extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
       controls: {}
-    };
+    }
   }
 
   /** should we add an type? */
-  addSlider = ({ title = `${inputType.slider}01`, ...rest }) => {
+  addSlider ({ title = `${inputType.slider}01`, ...rest }) {
     this.setState({
       controls: {
         ...this.state.controls,
@@ -30,12 +30,12 @@ export class QuickSettingsPanel extends Component {
           ...rest
         }
       }
-    });
-    return this;
+    })
+    return this
   };
 
   /** should we add an type? */
-  addColorPicker = ({ title = `${inputType.colorPicker}01`, componentName = 'SketchPicker', ...rest }) => {
+  addColorPicker ({ title = `${inputType.colorPicker}01`, componentName = 'SketchPicker', ...rest }) {
     this.setState({
       controls: {
         ...this.state.controls,
@@ -46,51 +46,50 @@ export class QuickSettingsPanel extends Component {
           ...rest
         }
       }
-    });
-    return this;
+    })
+    return this
   };
 
   /** remove control object using title as index
    * what about same title? generate ids?
    */
-  remove = title => {
-    let controls = { ...this.state.controls };
-    delete controls[title];
+  remove (title) {
+    const controls = { ...this.state.controls }
+    delete controls[title]
     this.setState({
       controls
-    });
-    return this;
+    })
+    return this
   };
 
-  getComponentForType = (type, componentName) => {
+  getComponentForType (type, componentName) {
     switch (type) {
       case inputType.slider:
-        return _SliderComponent;
+        return _SliderComponent
       case inputType.colorPicker:
-        return reactColorPicker[componentName];
+        return reactColorPicker[componentName]
       default:
-        break;
+        break
     }
   }
 
-  generateNewKey = (control) => `control_${control.inputType}_${control.title}`
+  generateNewKey (control) { return `control_${control.inputType}_${control.title}` }
 
   /**
    * for now just render the state.controls as JSON
    */
-  render() {
+  render () {
     return (
       <div>
         {Object.keys(this.state.controls).map((mappedKeyItem) => {
-          let item = this.state.controls[mappedKeyItem]
+          const item = this.state.controls[mappedKeyItem]
           const { title, inputType, componentName, ...rest } = item
-          let Component = this.getComponentForType(inputType, componentName)
-          let key = this.generateNewKey(item)
+          const Component = this.getComponentForType(inputType, componentName)
+          const key = this.generateNewKey(item)
           console.log(title)
-          return <Component  {...rest} key={key} id={key}/>
-        })
-        }
+          return <Component {...rest} key={key} id={key} />
+        })}
       </div>
-    );
+    )
   }
 }
