@@ -1,8 +1,13 @@
 import { Slider as _SliderComponent } from '@material-ui/core'
 import React, { Component } from 'react'
 import * as reactColorPicker from 'react-color'
+import { ColorPickerController } from './ColorPickerController'
+import ButtonColorPicker from './ButtonColorPicker/ButtonColorPicker'
+import ColorPicker from './ColorPicker/ColorPicker'
+import { red } from 'react-color/lib/helpers/color'
+import { toRgba } from '../helper/string'
 
-var inputType = {
+export const inputType = {
   slider: 'slider',
   colorPicker: 'colorPicker'
 }
@@ -14,8 +19,14 @@ export class QuickSettingsPanel extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      controls: {}
+      controls: {},
+      color: red
     }
+    this.handleChangeComplete = this.handleChangeComplete.bind(this)
+  }
+
+  handleChangeComplete (data) {
+    this.setState({ color: data })
   }
 
   /** should we add an type? */
@@ -34,39 +45,33 @@ export class QuickSettingsPanel extends Component {
     return this
   };
 
-  getControl (title) {
-    return { ...this.state.controls[title] }
-  }
-
-  onColorChange (color, title) {
-    const control = this.getControl(title)
-    control.color = color
-    this.setState({
-      controls: {
-        ...this.state.controls,
-        [title]: control
-      }
-    })
-  }
-
-  /** should we add an type? */
-  addColorPicker ({ title = `${inputType.colorPicker}01`, componentName = 'SketchPicker', ...rest }) {
-    const boundColorChange = this.onColorChange.bind(this)
+  saveControlState (title, newState) {
     this.setState({
       controls: {
         ...this.state.controls,
         [title]: {
-          inputType: inputType.colorPicker,
-          componentName,
-          title,
-          ...rest,
-          onChange: function (color, event) {
-            boundColorChange(color, title)
-            rest.onChange(color, event)
-          }
+          ...newState
         }
       }
     })
+  }
+
+  getControl (title) {
+    return { ...this.state.controls[title] }
+  }
+
+  /** should we add an type? */
+  addColorPicker ({ title = `${inputType.colorPicker}01`, componentName = 'ColorPicker', ...rest }) {
+    const boundSaveControlState = this.saveControlState.bind(this)
+
+    const colorController = new ColorPickerController({ title, componentName, disabled: true, ...rest })
+
+    colorController.onChange = function (color, event) {
+      colorController.attr('color', color)
+      boundSaveControlState(title, colorController)
+      rest.onChange && rest.onChange(color, event)
+    }
+    this.saveControlState(title, { ...colorController })
     return this
   };
 
@@ -87,7 +92,7 @@ export class QuickSettingsPanel extends Component {
       case inputType.slider:
         return _SliderComponent
       case inputType.colorPicker:
-        return reactColorPicker[componentName]
+        return componentName !== 'ColorPicker' ? reactColorPicker[componentName] : ColorPicker
       default:
         break
     }
@@ -100,14 +105,31 @@ export class QuickSettingsPanel extends Component {
    */
   render () {
     return (
-      <div>
-        {Object.keys(this.state.controls).map((mappedKeyItem) => {
+      <div style={{ justifyContent: 'space-between', display: 'flex', flexDirection: 'column', alignItems: 'center', flexGrow: 1, height: '100vh' }}>
+        <div style={{ width: 40, height: 40, backgroundColor: toRgba(this.state.color && this.state.color.rgb) }} />
+
+        <ButtonColorPicker title='Color-red' color={this.state.color} onChange={this.handleChangeComplete} />
+
+        <ColorPicker
+          onChange={this.handleChangeComplete}
+        />
+
+        <ColorPicker
+          title='color01'
+          color={this.state.color && this.state.color.hsl}
+          onChange={this.handleChangeComplete}
+        />
+
+        {/* <SketchExample />
+        <SketchExample /> */}
+        {/* {Object.keys(this.state.controls).map((mappedKeyItem) => {
           const item = this.state.controls[mappedKeyItem]
           const { title, inputType, componentName, ...rest } = item
           const Component = this.getComponentForType(inputType, componentName)
           const key = this.generateNewKey(item)
-          return <Component {...rest} key={key} id={key} />
-        })}
+          console.log({ rest })
+          return <Component {...rest} key={key} id={key} title={title} />
+        })} */}
       </div>
     )
   }
