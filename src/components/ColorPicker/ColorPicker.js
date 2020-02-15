@@ -10,7 +10,7 @@ import SketchPresetColors from 'react-color/lib/components/sketch/SketchPresetCo
 import SliderSwatches from './SliderSwatches'
 import { toRgba } from '../../helper/string'
 
-export const Sketch = ({
+export const ColorPicker = ({
   title,
   width, rgb, hex, hsv, hsl, onChange, onSwatchHover,
   disableAlpha, presetColors, renderers, styles: passedStyles = {}, className = ''
@@ -149,13 +149,13 @@ export const Sketch = ({
   )
 }
 
-Sketch.propTypes = {
+ColorPicker.propTypes = {
   disableAlpha: PropTypes.bool,
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   styles: PropTypes.object
 }
 
-Sketch.defaultProps = {
+ColorPicker.defaultProps = {
   disableAlpha: false,
   width: 200,
   styles: {},
@@ -164,4 +164,4 @@ Sketch.defaultProps = {
     '#4A4A4A', '#9B9B9B', '#FFFFFF']
 }
 
-export default ColorWrap(Sketch)
+export default ColorWrap(ColorPicker)
