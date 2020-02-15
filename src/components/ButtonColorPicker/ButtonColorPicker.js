@@ -3,6 +3,7 @@ import reactCSS from 'reactcss'
 import colorUtils from 'react-color/lib/helpers/color'
 import ColorPicker from '../ColorPicker/ColorPicker';
 import { ColorWrap } from 'react-color/lib/components/common';
+import { toRgba } from '../../helper/string';
 
 class SketchExample extends React.Component {
     constructor(props) {
@@ -24,8 +25,6 @@ class SketchExample extends React.Component {
     handleChange = (color) => {
         this.setState({ color })
     };
-
-    toRgba = (rgb) => `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${rgb.a})`
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.color !== this.props.color)
@@ -49,7 +48,7 @@ class SketchExample extends React.Component {
                     padding: 4,
                     flexGrow: 1,
                     height: 24,
-                    backgroundColor: this.toRgba(this.state.color.rgb)
+                    backgroundColor: toRgba(this.state.color.rgb)
                 },
                 popover: {
                     position: 'absolute',
