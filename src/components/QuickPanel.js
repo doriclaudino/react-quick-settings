@@ -34,8 +34,24 @@ export class QuickSettingsPanel extends Component {
     return this
   };
 
+  getControl (title) {
+    return { ...this.state.controls[title] }
+  }
+
+  onColorChange (color, title) {
+    const control = this.getControl(title)
+    control.color = color
+    this.setState({
+      controls: {
+        ...this.state.controls,
+        [title]: control
+      }
+    })
+  }
+
   /** should we add an type? */
   addColorPicker ({ title = `${inputType.colorPicker}01`, componentName = 'SketchPicker', ...rest }) {
+    const boundColorChange = this.onColorChange.bind(this)
     this.setState({
       controls: {
         ...this.state.controls,
@@ -43,7 +59,11 @@ export class QuickSettingsPanel extends Component {
           inputType: inputType.colorPicker,
           componentName,
           title,
-          ...rest
+          ...rest,
+          onChange: function (color, event) {
+            boundColorChange(color, title)
+            rest.onChange(color, event)
+          }
         }
       }
     })
@@ -86,7 +106,6 @@ export class QuickSettingsPanel extends Component {
           const { title, inputType, componentName, ...rest } = item
           const Component = this.getComponentForType(inputType, componentName)
           const key = this.generateNewKey(item)
-          console.log(title)
           return <Component {...rest} key={key} id={key} />
         })}
       </div>
