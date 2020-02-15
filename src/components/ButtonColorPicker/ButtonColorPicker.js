@@ -2,15 +2,13 @@ import React from 'react'
 import reactCSS from 'reactcss'
 import colorUtils from 'react-color/lib/helpers/color'
 import ColorPicker from '../ColorPicker/ColorPicker';
-import { ColorWrap } from 'react-color/lib/components/common';
 import { toRgba } from '../../helper/string';
 
-class SketchExample extends React.Component {
-    constructor(props) {
-        super(props)
+class ButtonColorPicker extends React.Component {
+    constructor() {
+        super()
         this.state = {
-            displayColorPicker: false,
-            color: colorUtils.toState(this.props.color)
+            displayColorPicker: false
         };
     }
 
@@ -22,20 +20,11 @@ class SketchExample extends React.Component {
         this.setState({ displayColorPicker: false })
     };
 
-    handleChange = (color) => {
-        this.setState({ color })
-    };
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevProps.color !== this.props.color)
-            this.setState({ color: colorUtils.toState(this.props.color) })
-    }
-
     render() {
         const styles = reactCSS({
             default: {
                 title: {
-                    color: this.state.color.rgb.a < 0.5 ? '#000' : colorUtils.getContrastingColor(this.state.color)
+                    color: this.props.color.rgb.a < 0.5 ? '#000' : colorUtils.getContrastingColor(this.props.color)
                 },
                 swatch: {
                     borderRadius: '2px',
@@ -48,7 +37,7 @@ class SketchExample extends React.Component {
                     padding: 4,
                     flexGrow: 1,
                     height: 24,
-                    backgroundColor: toRgba(this.state.color.rgb)
+                    backgroundColor: toRgba(this.props.color.rgb)
                 },
                 popover: {
                     position: 'absolute',
@@ -71,12 +60,11 @@ class SketchExample extends React.Component {
                 </div>
                 {this.state.displayColorPicker ? <div style={styles.popover}>
                     <div style={styles.cover} onClick={this.handleClose} />
-                    <ColorPicker color={this.state.color.rgb} onChange={this.handleChange} />
+                    <ColorPicker {...this.props} color={this.props.color && this.props.color.rgb} />
                 </div> : null}
-
             </div>
         )
     }
 }
 
-export default ColorWrap(SketchExample)
+export default ButtonColorPicker

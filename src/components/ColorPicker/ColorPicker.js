@@ -8,6 +8,7 @@ import { ColorWrap, Saturation, Hue, Alpha, Checkboard } from 'react-color/lib/c
 import SketchFields from 'react-color/lib/components/sketch/SketchFields'
 import SketchPresetColors from 'react-color/lib/components/sketch/SketchPresetColors'
 import SliderSwatches from './SliderSwatches'
+import { toRgba } from '../../helper/string'
 
 export const Sketch = ({
   title,
@@ -55,7 +56,7 @@ export const Sketch = ({
       activeColor: {
         absolute: '0px 0px 0px 0px',
         borderRadius: '2px',
-        background: `rgba(${rgb.r},${rgb.g},${rgb.b},${rgb.a})`,
+        background: toRgba(rgb),
         boxShadow: 'inset 0 0 0 1px rgba(0,0,0,.15), inset 0 0 4px rgba(0,0,0,.25)'
       },
       hue: {
