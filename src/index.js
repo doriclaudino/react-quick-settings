@@ -1,5 +1,5 @@
 import { red } from 'react-color/lib/helpers/color';
-import { QuickSettings } from './components/QuickSettings';
+import QuickSettings from './components/QuickSettings';
 
 /**
  * expose on window for suellen learning process
@@ -47,8 +47,8 @@ const sliderMocks = [
 
 const q = new QuickSettings(document.getElementById('container'));
 window.q = q;
-buttonColorPickerMocks.forEach((mock) => q.addButtonColorPicker(mock));
-colorPickerMocks.forEach((mock) => q.addColorPicker(mock));
-sliderMocks.forEach((mock) => q.addSlider(mock));
+buttonColorPickerMocks.forEach(mock => q.addButtonColorPicker(mock));
+colorPickerMocks.forEach(mock => q.addColorPicker(mock));
+sliderMocks.forEach(mock => q.addSlider(mock));
 
 /** teste */

@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
-import reactCSS from 'reactcss'
-import colorUtils, { red } from 'react-color/lib/helpers/color'
-import ColorPicker from '../ColorPicker/ColorPicker'
-import { toRgba } from '../../helper/string'
+import React, { useState } from 'react';
+import reactCSS from 'reactcss';
+import propTypes from 'prop-types';
+import colorUtils, { red } from 'react-color/lib/helpers/color';
+import tinycolor from 'tinycolor2';
+import ColorPicker from '../ColorPicker';
+import Shapes from '../../helper/shapes';
 
-export const ButtonColorPicker = ({ title, color, onChange }) => {
-  const [isToggle, setToggled] = useState(false)
-  const toggleTrueFalse = () => setToggled(!isToggle)
+const buttonColorPicker = ({ title, color, onChange }) => {
+  const [isToggle, setToggled] = useState(false);
+  const toggleTrueFalse = () => setToggled(!isToggle);
 
   const styles = reactCSS({
     default: {
       title: {
-        color: color.rgb.a < 0.5 ? '#000' : colorUtils.getContrastingColor(color)
+        color: color.rgb.a < 0.5 ? '#000' : colorUtils.getContrastingColor(color),
       },
       swatch: {
         borderRadius: '2px',
@@ -24,37 +26,47 @@ export const ButtonColorPicker = ({ title, color, onChange }) => {
         padding: 4,
         flexGrow: 1,
         height: 24,
-        backgroundColor: toRgba(color.rgb)
+        backgroundColor: tinycolor(color.rgb).toString('prgb'),
       },
       popover: {
         position: 'absolute',
-        zIndex: '2'
+        zIndex: '2',
       },
       cover: {
         position: 'fixed',
         top: '0px',
         right: '0px',
         bottom: '0px',
-        left: '0px'
-      }
-    }
-  })
+        left: '0px',
+      },
+    },
+  });
 
   return (
     <div>
-      <div style={styles.swatch} onClick={toggleTrueFalse}>
+      <div style={styles.swatch} onClick={toggleTrueFalse} role="presentation">
         <div style={styles.title}>{title}</div>
       </div>
-      {isToggle ? <div style={styles.popover}>
-        <div style={styles.cover} onClick={toggleTrueFalse} />
-        <ColorPicker color={color && color.rgb} onChange={onChange} />
-      </div> : null}
+      {isToggle ? (
+        <div style={styles.popover}>
+          <div style={styles.cover} onClick={toggleTrueFalse} role="presentation" />
+          <ColorPicker color={color && color.rgb} onChange={onChange} />
+        </div>
+      ) : null}
     </div>
-  )
-}
+  );
+};
 
-export default ButtonColorPicker
+buttonColorPicker.propTypes = {
+  title: propTypes.string,
+  color: Shapes.tinycolor,
+  onChange: propTypes.func,
+};
 
-ButtonColorPicker.defaultProps = {
-  color: red
-}
+buttonColorPicker.defaultProps = {
+  title: '',
+  color: red,
+  onChange: undefined,
+};
+
+export default buttonColorPicker;

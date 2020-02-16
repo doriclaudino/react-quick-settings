@@ -41,7 +41,8 @@
     "react": "^16.12.0",
     "react-color": "^2.18.0",
     "react-dom": "^16.12.0",
-    "reactcss": "^1.2.3"
+    "reactcss": "^1.2.3",
+    "tinycolor2": "^1.4.1"
   },
   "husky": {
     "hooks": {

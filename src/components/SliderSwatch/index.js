@@ -1,9 +1,9 @@
 import React from 'react';
 import reactCSS from 'reactcss';
 import PropTypes from 'prop-types';
-import { red } from 'react-color/lib/helpers/color';
+import Shapes from '../../helper/shapes';
 
-export const SliderSwatch = ({ hsl, offset, onClick = () => {}, active }) => {
+const sliderSwatch = ({ hsl, offset, onClick = () => {}, active }) => {
   const styles = reactCSS(
     {
       default: {
@@ -37,17 +37,17 @@ export const SliderSwatch = ({ hsl, offset, onClick = () => {}, active }) => {
   return <div style={styles.swatch} onClick={handleClick} role="presentation" />;
 };
 
-SliderSwatch.propTypes = {
-  hsl: PropTypes.objectOf(red.hsl),
+sliderSwatch.propTypes = {
+  hsl: Shapes.hsl,
   offset: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onClick: PropTypes.func,
   active: PropTypes.bool,
 };
 
-SliderSwatch.defaultProps = {
-  hsl: {},
+sliderSwatch.defaultProps = {
+  hsl: undefined,
   offset: 0,
   onClick: undefined,
   active: false,
 };
-export default SliderSwatch;
+export default sliderSwatch;
