@@ -1,4 +1,5 @@
 import { QuickSettings } from './components/QuickSettings'
+import { red } from 'react-color/lib/helpers/color'
 
 /**
  * expose on window for suellen learning process
@@ -27,7 +28,11 @@ const marks = [
     label: '100°C'
   }
 ]
+const colorPickerMocks = [{ title: 'picker1', color: red.hsl }, { title: 'picker2', color: red.hsl }, { title: 'picker3', color: red.hsl }, { title: 'picker4', color: red.hsl }]
+
 const q = new QuickSettings(document.getElementById('container'))
+window.q = q
+colorPickerMocks.forEach(mock => q.addColorPicker(mock))
 q.addSlider({
   title: 'how_many_cats1',
   defaultValue: 25,
@@ -50,22 +55,18 @@ q.addSlider({
   onChange: (obj, value) => console.log(value)
 })
 
-function userOnChangeCallback (color, event) {
-  console.log('here you decide', { color, event })
-}
+// let propColor = '#000'
+// function userOnChangeCallback (color, event) {
+//   propColor = color
+// }
 /** example with color pickers */
-q.addColorPicker({
-  title: 'car_color_01',
-  onChange: userOnChangeCallback
-})
-q.addColorPicker({
-  title: 'car_color_02',
-  componentName: 'SwatchesPicker',
-  onChange: userOnChangeCallback
-})
-q.addColorPicker({
-  title: 'car_color_03',
-  componentName: 'CompactPicker',
-  onChange: userOnChangeCallback
-})
-console.log(q)
+
+// q.addColorPicker({
+//   title: 'car_color_04'
+// })
+// q.addColorPicker({
+//   title: 'car_color_03',
+//   componentName: 'CompactPicker',
+//   onChange: userOnChangeCallback
+// })
+// console.log(q)
