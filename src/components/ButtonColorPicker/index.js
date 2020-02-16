@@ -4,7 +4,7 @@ import colorUtils, { red } from 'react-color/lib/helpers/color'
 import ColorPicker from '../ColorPicker/ColorPicker'
 import { toRgba } from '../../helper/string'
 
-const ButtonColorPicker = ({ title, color, onChange }) => {
+export const ButtonColorPicker = ({ title, color, onChange }) => {
   const [isToggle, setToggled] = useState(false)
   const toggleTrueFalse = () => setToggled(!isToggle)
 

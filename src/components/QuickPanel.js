@@ -1,10 +1,12 @@
 import { Slider as _SliderComponent } from '@material-ui/core'
 import React, { Component } from 'react'
 import ColorPicker from './ColorPicker/ColorPicker'
+import ButtonColorPicker from './ButtonColorPicker'
 
 export const inputType = {
   slider: 'slider',
-  colorPicker: 'colorPicker'
+  colorPicker: 'colorPicker',
+  buttonColorPicker: 'buttonColorPicker'
 }
 /**
  * Main class
@@ -24,13 +26,32 @@ export class QuickSettingsPanel extends Component {
     this.setState(stateCopy)
   }
 
+  addButtonColorPicker ({ title, color, onChange, ...rest }) {
+    const boundSaveControlState = this.saveControlState.bind(this)
+
+    const colorController = {
+      title,
+      color,
+      inputtype: inputType.buttonColorPicker,
+      ...rest
+    }
+
+    colorController.onChange = function (color, event) {
+      colorController.color = color
+      boundSaveControlState(title, colorController)
+      rest.onChange && rest.onChange(color, event)
+    }
+    this.saveControlState(title, { ...colorController })
+    return this
+  };
+
   addColorPicker ({ title, color, onChange, ...rest }) {
     const boundSaveControlState = this.saveControlState.bind(this)
 
     const colorController = {
       title,
       color,
-      inputType: inputType.colorPicker,
+      inputtype: inputType.colorPicker,
       ...rest
     }
 
@@ -48,7 +69,7 @@ export class QuickSettingsPanel extends Component {
       controls: {
         ...this.state.controls,
         [title]: {
-          inputType: inputType.slider,
+          inputtype: inputType.slider,
           title,
           ...rest
         }
@@ -84,18 +105,20 @@ export class QuickSettingsPanel extends Component {
     return this
   };
 
-  getComponentForType (type, componentName) {
+  getComponentForType (type) {
     switch (type) {
       case inputType.slider:
         return _SliderComponent
       case inputType.colorPicker:
         return ColorPicker
+      case inputType.buttonColorPicker:
+        return ButtonColorPicker
       default:
         break
     }
   }
 
-  generateNewKey (control) { return `control_${control.inputType}_${control.title}` }
+  generateNewKey (control) { return `control_${control.inputtype}_${control.title}` }
 
   /**
    * for now just render the state.controls as JSON
@@ -103,9 +126,10 @@ export class QuickSettingsPanel extends Component {
   render () {
     return (
       <div style={{ justifyContent: 'space-between', display: 'flex', flexWrap: 'wrap', padding: '10px' }}>
+
         {Object.keys(this.state.controls).map((mappedKeyItem) => {
           const item = this.getControl(mappedKeyItem)
-          const Component = this.getComponentForType(item.inputType)
+          const Component = this.getComponentForType(item.inputtype)
           return (<Component key={mappedKeyItem} {...item} />)
         })}
       </div>

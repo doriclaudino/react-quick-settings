@@ -29,44 +29,11 @@ const marks = [
   }
 ]
 const colorPickerMocks = [{ title: 'picker1', color: red.hsl }, { title: 'picker2', color: red.hsl }, { title: 'picker3', color: red.hsl }, { title: 'picker4', color: red.hsl }]
+const buttonColorPickerMocks = [{ title: 'btn1', color: red }, { title: 'btn2', color: red }, { title: 'btn3', color: red }]
+const sliderMocks = [{ title: 'slider1', marks, defaultValue: 25 }, { title: 'slider2', defaultValue: 10 }, { title: 'slider3', defaultValue: 2 }]
 
 const q = new QuickSettings(document.getElementById('container'))
 window.q = q
+buttonColorPickerMocks.forEach(mock => q.addButtonColorPicker(mock))
 colorPickerMocks.forEach(mock => q.addColorPicker(mock))
-q.addSlider({
-  title: 'how_many_cats1',
-  defaultValue: 25,
-  marks,
-  onChange: (obj, value) => console.log(value)
-})
-q.addSlider({
-  title: 'how_many_cats2',
-  defaultValue: 25,
-  onChange: (obj, value) => console.log(value)
-})
-q.addSlider({
-  title: 'how_many_cats3',
-  defaultValue: 25,
-  onChange: (obj, value) => console.log(value)
-})
-q.addSlider({
-  title: 'how_many_cats4',
-  defaultValue: 25,
-  onChange: (obj, value) => console.log(value)
-})
-
-// let propColor = '#000'
-// function userOnChangeCallback (color, event) {
-//   propColor = color
-// }
-/** example with color pickers */
-
-// q.addColorPicker({
-//   title: 'car_color_04'
-// })
-// q.addColorPicker({
-//   title: 'car_color_03',
-//   componentName: 'CompactPicker',
-//   onChange: userOnChangeCallback
-// })
-// console.log(q)
+sliderMocks.forEach(mock => q.addSlider(mock))
