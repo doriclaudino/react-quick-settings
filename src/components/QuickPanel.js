@@ -1,8 +1,6 @@
 import { Slider as _SliderComponent } from '@material-ui/core'
 import React, { Component } from 'react'
 import ColorPicker from './ColorPicker/ColorPicker'
-import { red } from 'react-color/lib/helpers/color'
-import { toRgba } from '../helper/string'
 
 export const inputType = {
   slider: 'slider',
