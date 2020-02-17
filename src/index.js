@@ -40,7 +40,12 @@ const buttonColorPickerMocks = [
   { title: 'btn3', color: red },
 ];
 const sliderMocks = [
-  { title: 'slider1', marks, defaultValue: 25 },
+  {
+    title: 'slider1',
+    marks,
+    defaultValue: 25,
+    styles: { label: { color: 'green', fontWeight: 'bold' } },
+  },
   { title: 'slider2', defaultValue: 10 },
   { title: 'slider3', defaultValue: 2 },
 ];
