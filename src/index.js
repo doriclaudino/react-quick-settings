@@ -50,10 +50,17 @@ const sliderMocks = [
   { title: 'slider3', defaultValue: 2 },
 ];
 
+const switchesMock = [
+  { title: 'check1' },
+  { title: 'check2-left-text', styles: { label: { order: 0 } } },
+  { title: 'check3' },
+];
+
 const q = new QuickSettings(document.getElementById('container'));
 window.q = q;
 buttonColorPickerMocks.forEach(mock => q.addButtonColorPicker(mock));
 colorPickerMocks.forEach(mock => q.addColorPicker(mock));
 sliderMocks.forEach(mock => q.addSlider(mock));
+switchesMock.forEach(mock => q.addSwitchButton(mock));
 
 /** teste */

@@ -3,11 +3,13 @@ import Slider from '../Slider';
 import ColorPicker from '../ColorPicker';
 import ButtonColorPicker from '../ButtonColorPicker';
 import { isFunction } from '../../helper/common';
+import switchButton from '../Switch';
 
 export const inputType = {
   slider: 'slider',
   colorPicker: 'colorPicker',
   buttonColorPicker: 'buttonColorPicker',
+  switchButton: 'switchButton',
 };
 /**
  * Main class
@@ -34,9 +36,21 @@ export default class QuickSettingsPanel extends Component {
         return ColorPicker;
       case inputType.buttonColorPicker:
         return ButtonColorPicker;
+      case inputType.switchButton:
+        return switchButton;
       default:
-        return null;
+        throw new Error('Component type not implemented yet.');
     }
+  }
+
+  addSwitchButton({ title, onChange, ...rest }) {
+    const controller = {
+      title,
+      inputtype: inputType.switchButton,
+      ...rest,
+    };
+    this.saveControlState(title, { ...controller });
+    return this;
   }
 
   addButtonColorPicker({ title, color, onChange, ...rest }) {
