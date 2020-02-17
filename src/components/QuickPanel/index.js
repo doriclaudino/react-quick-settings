@@ -1,5 +1,5 @@
-import { Slider as _SliderComponent } from '@material-ui/core';
 import React, { Component } from 'react';
+import Slider from '../Slider';
 import ColorPicker from '../ColorPicker';
 import ButtonColorPicker from '../ButtonColorPicker';
 import { isFunction } from '../../helper/common';
@@ -29,7 +29,7 @@ export default class QuickSettingsPanel extends Component {
   getComponentForType(type) {
     switch (type) {
       case inputType.slider:
-        return _SliderComponent;
+        return Slider;
       case inputType.colorPicker:
         return ColorPicker;
       case inputType.buttonColorPicker:
