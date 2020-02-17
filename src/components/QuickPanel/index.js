@@ -138,7 +138,6 @@ export default class QuickSettingsPanel extends Component {
         {Object.keys(controls).map(mappedKeyItem => {
           const item = this.getControl(mappedKeyItem);
           const DefinedComponent = this.getComponentForType(item.inputtype);
-          // eslint-disable-next-line react/jsx-props-no-spreading
           return <DefinedComponent key={mappedKeyItem} {...item} />;
         })}
       </div>
