@@ -58,5 +58,5 @@ const burguerMenu = document.getElementById('burguer-menu');
 const settings = new QuickSettings(burguerMenu);
 
 settings
-  .addButtonColorPicker({ title: 'btn1', color: red })
+  .addButtonColorPicker({ title: 'btn1', color: 'blue' })
   .addButtonColorPicker({ title: 'btn2', color: red });

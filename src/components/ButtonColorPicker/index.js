@@ -3,17 +3,18 @@ import reactCSS from 'reactcss';
 import propTypes from 'prop-types';
 import colorUtils, { red } from 'react-color/lib/helpers/color';
 import tinycolor from 'tinycolor2';
+import { ColorWrap } from 'react-color/lib/components/common';
 import ColorPicker from '../ColorPicker';
 import Shapes from '../../helper/shapes';
 
-const buttonColorPicker = ({ title, color, onChange }) => {
+const buttonColorPicker = ({ title, rgb, onChange }) => {
   const [isToggle, setToggled] = useState(false);
   const toggleTrueFalse = () => setToggled(!isToggle);
 
   const styles = reactCSS({
     default: {
       title: {
-        color: color.rgb.a < 0.5 ? '#000' : colorUtils.getContrastingColor(color),
+        color: rgb.a < 0.5 ? '#000' : colorUtils.getContrastingColor(tinycolor(rgb)),
       },
       swatch: {
         borderRadius: '2px',
@@ -26,7 +27,7 @@ const buttonColorPicker = ({ title, color, onChange }) => {
         padding: 4,
         flexGrow: 1,
         height: 24,
-        backgroundColor: tinycolor(color.rgb).toString('prgb'),
+        backgroundColor: tinycolor(rgb).toString('prgb'),
       },
       popover: {
         position: 'absolute',
@@ -50,7 +51,7 @@ const buttonColorPicker = ({ title, color, onChange }) => {
       {isToggle ? (
         <div style={styles.popover}>
           <div style={styles.cover} onClick={toggleTrueFalse} role="presentation" />
-          <ColorPicker color={color && color.rgb} onChange={onChange} />
+          <ColorPicker color={rgb} onChange={onChange} />
         </div>
       ) : null}
     </div>
@@ -58,15 +59,14 @@ const buttonColorPicker = ({ title, color, onChange }) => {
 };
 
 buttonColorPicker.propTypes = {
-  title: propTypes.string,
-  color: Shapes.tinycolor,
+  title: propTypes.string.isRequired,
+  rgb: Shapes.rgb,
   onChange: propTypes.func,
 };
 
 buttonColorPicker.defaultProps = {
-  title: '',
-  color: red,
+  rgb: red.rgb,
   onChange: undefined,
 };
 
-export default buttonColorPicker;
+export default ColorWrap(buttonColorPicker);
