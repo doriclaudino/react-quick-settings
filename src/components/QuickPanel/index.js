@@ -65,7 +65,7 @@ export default class QuickSettingsPanel extends Component {
     colorController.onChange = (eColor, event) => {
       colorController.color = eColor;
       boundSaveControlState(title, colorController);
-      if (isFunction(rest.onChange)) rest.onChange(eColor, event);
+      if (isFunction(onChange)) onChange(eColor, event);
     };
     this.saveControlState(title, { ...colorController });
     return this;
@@ -84,7 +84,7 @@ export default class QuickSettingsPanel extends Component {
     colorController.onChange = (eColor, event) => {
       colorController.color = eColor.hsl;
       boundSaveControlState(title, colorController);
-      if (typeof rest.onChange === 'function') rest.onChange(eColor, event);
+      if (typeof onChange === 'function') onChange(eColor, event);
     };
     this.saveControlState(title, { ...colorController });
     return this;
